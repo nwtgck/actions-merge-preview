@@ -47,7 +47,8 @@ async function run(): Promise<void> {
       console.log(
         execSync(
           // TODO: Search more for allow-unrelated-histories
-          `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`
+          // `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`
+          `git pull https://github.com/${fullRepoName}.git ${branchName}`
         ).toString()
       )
     } else {

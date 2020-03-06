@@ -3555,7 +3555,8 @@ function run() {
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(
                 // TODO: Search more for allow-unrelated-histories
-                `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`).toString());
+                // `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`
+                `git pull https://github.com/${fullRepoName}.git ${branchName}`).toString());
             }
             else {
                 // eslint-disable-next-line no-console
