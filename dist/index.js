@@ -3529,6 +3529,14 @@ function run() {
                     console.log(`HINT: Merge-preview is triggered when you comment "${previewComment}"`);
                     return;
                 }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const association = github_1.context.payload.comment.author_association;
+                // If commenting user has no write permission
+                if (!(association === 'OWNER' || association === 'COLLABORATOR')) {
+                    // eslint-disable-next-line no-console
+                    console.warn(`NOTE: The owner and the collaborators can trigger this action, but you are ${association}.`);
+                    return;
+                }
                 // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const pullReqUrl = github_1.context.payload.issue.pull_request.url;
