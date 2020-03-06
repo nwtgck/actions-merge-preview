@@ -3549,6 +3549,8 @@ function run() {
                 child_process_1.execSync(`git config --global user.email "you@example.com"`);
                 // TODO:
                 child_process_1.execSync(`git config --global user.name "Your Name"`);
+                // (from: https://stackoverflow.com/a/23987039/2885946)
+                child_process_1.execSync(`git fetch --unshallow`);
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`).toString());
                 // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)

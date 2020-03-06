@@ -36,6 +36,8 @@ async function run(): Promise<void> {
       execSync(`git config --global user.email "you@example.com"`)
       // TODO:
       execSync(`git config --global user.name "Your Name"`)
+      // (from: https://stackoverflow.com/a/23987039/2885946)
+      execSync(`git fetch --unshallow`)
       // eslint-disable-next-line no-console
       console.log(
         execSync(
