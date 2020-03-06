@@ -36,7 +36,12 @@ async function run(): Promise<void> {
         `git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`
       )
       // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
-      execSync(`git pull https://github.com/${fullRepoName}.git ${branchName}`)
+      // eslint-disable-next-line no-console
+      console.log(
+        execSync(
+          `git pull https://github.com/${fullRepoName}.git ${branchName}`
+        ).toString()
+      )
     } else {
       // eslint-disable-next-line no-console
       console.warn(`event name is not 'issue_comment': ${context.eventName}`)
