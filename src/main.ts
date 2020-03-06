@@ -13,6 +13,10 @@ async function run(): Promise<void> {
       const comment: string = (context.payload as any).comment.body
       // If not preview-request comment
       if (!comment.startsWith(previewComment)) {
+        // eslint-disable-next-line no-console
+        console.log(
+          `HINT: Merge-preview is triggered when you comment "${previewComment}"`
+        )
         return
       }
       // eslint-disable-next-line no-console
