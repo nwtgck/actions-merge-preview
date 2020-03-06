@@ -28,11 +28,9 @@ async function run(): Promise<void> {
       const baseBranchName: string = resJson.base.ref
       const branchName: string = resJson.head.ref
       const fullRepoName: string = resJson.head.repo.full_name
+      // TODO: Avoid branch name conflict
       const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`
-      // eslint-disable-next-line no-console
-      console.log(execSync(`git status`).toString())
-      // eslint-disable-next-line no-console
-      console.log(execSync(`git log`).toString())
+
       // TODO:
       execSync(`git config --global user.email "bee-bot-bot@protonmail.com"`)
       // TODO:
@@ -48,7 +46,7 @@ async function run(): Promise<void> {
       // eslint-disable-next-line no-console
       console.log(
         execSync(
-          `git pull git@github.com:${fullRepoName}.git ${branchName}`
+          `git pull https://github.com/${fullRepoName}.git ${branchName}`
         ).toString()
       )
       // Push preview branch

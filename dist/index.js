@@ -3541,11 +3541,8 @@ function run() {
                 const baseBranchName = resJson.base.ref;
                 const branchName = resJson.head.ref;
                 const fullRepoName = resJson.head.repo.full_name;
+                // TODO: Avoid branch name conflict
                 const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`;
-                // eslint-disable-next-line no-console
-                console.log(child_process_1.execSync(`git status`).toString());
-                // eslint-disable-next-line no-console
-                console.log(child_process_1.execSync(`git log`).toString());
                 // TODO:
                 child_process_1.execSync(`git config --global user.email "bee-bot-bot@protonmail.com"`);
                 // TODO:
@@ -3555,7 +3552,7 @@ function run() {
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git checkout -b ${previewBranchName} ${baseBranchName}`).toString());
                 // eslint-disable-next-line no-console
-                console.log(child_process_1.execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`).toString());
+                console.log(child_process_1.execSync(`git pull https://github.com/${fullRepoName}.git ${branchName}`).toString());
                 // Push preview branch
                 child_process_1.execSync(`git push -u origin ${previewBranchName}`);
             }
