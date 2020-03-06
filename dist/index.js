@@ -3545,6 +3545,7 @@ function run() {
                 const baseBranchName = resJson.base.ref;
                 const branchName = resJson.head.ref;
                 const fullRepoName = resJson.head.repo.full_name;
+                child_process_1.execSync(`git status`);
                 child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`);
                 child_process_1.execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`);
             }
