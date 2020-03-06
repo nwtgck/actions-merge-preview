@@ -32,9 +32,10 @@ async function run(): Promise<void> {
       const baseBranchName: string = resJson.base.ref
       const branchName: string = resJson.head.ref
       const fullRepoName: string = resJson.head.repo.full_name
-      const resText = execSync(`git status`).toString()
       // eslint-disable-next-line no-console
-      console.log({resText})
+      console.log(execSync(`git status`).toString())
+      // eslint-disable-next-line no-console
+      console.log(execSync(`git log`).toString())
       execSync(
         `git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`
       )
