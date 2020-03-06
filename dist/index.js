@@ -3547,9 +3547,9 @@ function run() {
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git log`).toString());
                 // TODO:
-                child_process_1.execSync(`git config --global user.email "you@example.com"`);
+                child_process_1.execSync(`git config --global user.email "bee-bot-bot@protonmail.com"`);
                 // TODO:
-                child_process_1.execSync(`git config --global user.name "Your Name"`);
+                child_process_1.execSync(`git config --global user.name "Bee Bot"`);
                 // (from: https://stackoverflow.com/a/23987039/2885946)
                 child_process_1.execSync(`git fetch --unshallow`);
                 // eslint-disable-next-line no-console

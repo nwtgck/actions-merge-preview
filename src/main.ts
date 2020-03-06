@@ -34,9 +34,9 @@ async function run(): Promise<void> {
       // eslint-disable-next-line no-console
       console.log(execSync(`git log`).toString())
       // TODO:
-      execSync(`git config --global user.email "you@example.com"`)
+      execSync(`git config --global user.email "bee-bot-bot@protonmail.com"`)
       // TODO:
-      execSync(`git config --global user.name "Your Name"`)
+      execSync(`git config --global user.name "Bee Bot"`)
       // (from: https://stackoverflow.com/a/23987039/2885946)
       execSync(`git fetch --unshallow`)
       // eslint-disable-next-line no-console
