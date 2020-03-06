@@ -3541,6 +3541,7 @@ function run() {
                 const baseBranchName = resJson.base.ref;
                 const branchName = resJson.head.ref;
                 const fullRepoName = resJson.head.repo.full_name;
+                const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`;
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git status`).toString());
                 // eslint-disable-next-line no-console
@@ -3552,13 +3553,15 @@ function run() {
                 // (from: https://stackoverflow.com/a/23987039/2885946)
                 child_process_1.execSync(`git fetch --unshallow`);
                 // eslint-disable-next-line no-console
-                console.log(child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`).toString());
+                console.log(child_process_1.execSync(`git checkout -b ${previewBranchName} ${baseBranchName}`).toString());
                 // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(
                 // TODO: Search more for allow-unrelated-histories
                 // `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`
                 `git pull https://github.com/${fullRepoName}.git ${branchName}`).toString());
+                // Push preview branch
+                child_process_1.execSync(`git push -u origin ${previewBranchName}`);
             }
             else {
                 // eslint-disable-next-line no-console

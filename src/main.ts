@@ -28,6 +28,7 @@ async function run(): Promise<void> {
       const baseBranchName: string = resJson.base.ref
       const branchName: string = resJson.head.ref
       const fullRepoName: string = resJson.head.repo.full_name
+      const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`
       // eslint-disable-next-line no-console
       console.log(execSync(`git status`).toString())
       // eslint-disable-next-line no-console
@@ -41,7 +42,7 @@ async function run(): Promise<void> {
       // eslint-disable-next-line no-console
       console.log(
         execSync(
-          `git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`
+          `git checkout -b ${previewBranchName} ${baseBranchName}`
         ).toString()
       )
       // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
@@ -53,6 +54,8 @@ async function run(): Promise<void> {
           `git pull https://github.com/${fullRepoName}.git ${branchName}`
         ).toString()
       )
+      // Push preview branch
+      execSync(`git push -u origin ${previewBranchName}`)
     } else {
       // eslint-disable-next-line no-console
       console.warn(`event name is not 'issue_comment': ${context.eventName}`)
