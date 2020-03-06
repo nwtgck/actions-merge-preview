@@ -39,7 +39,8 @@ async function run(): Promise<void> {
       // eslint-disable-next-line no-console
       console.log(
         execSync(
-          `git pull https://github.com/${fullRepoName}.git ${branchName}`
+          // TODO: Search more for allow-unrelated-histories
+          `git pull --allow-unrelated-histories https://github.com/${fullRepoName}.git ${branchName}`
         ).toString()
       )
     } else {
