@@ -3546,7 +3546,8 @@ function run() {
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git log`).toString());
                 child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`);
-                child_process_1.execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`);
+                // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
+                child_process_1.execSync(`git pull https://github.com/${fullRepoName}.git ${branchName}`);
             }
             else {
                 // eslint-disable-next-line no-console
