@@ -3529,17 +3529,18 @@ function run() {
                     console.log(`HINT: Merge-preview is triggered when you comment "${previewComment}"`);
                     return;
                 }
-                // eslint-disable-next-line no-console
-                console.log({ commentBody: comment });
                 // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const pullReqUrl = github_1.context.payload.issue.pull_request.url;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const githubUser = github_1.context.payload.repository.owner.login;
+                // eslint-disable-next-line no-console
+                console.log({ githubUser });
                 const res = yield node_fetch_1.default(pullReqUrl, {
                     headers: [
                         [
                             'Authorization',
-                            // TODO: user hard code
-                            `Basic ${Buffer.from(`nwtgck:${githubToken}`).toString('base64')}`
+                            `Basic ${Buffer.from(`${githubUser}:${githubToken}`).toString('base64')}`
                         ]
                     ]
                 });
@@ -3555,7 +3556,9 @@ function run() {
                 // TODO:
                 child_process_1.execSync(`git config --global user.name "Bee Bot"`);
                 // (from: https://stackoverflow.com/a/23987039/2885946)
-                child_process_1.execSync(`git fetch --unshallow`);
+                child_process_1.execSync(`git fetch --unshallow --all`);
+                // eslint-disable-next-line no-console
+                console.log(child_process_1.execSync(`git checkout ${baseBranchName}`).toString());
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git checkout -b ${previewBranchName} ${baseBranchName}`).toString());
                 // eslint-disable-next-line no-console

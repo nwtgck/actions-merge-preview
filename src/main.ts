@@ -19,17 +19,20 @@ async function run(): Promise<void> {
         )
         return
       }
-      // eslint-disable-next-line no-console
-      console.log({commentBody: comment})
       // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const pullReqUrl: string = (context.payload as any).issue.pull_request.url
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const githubUser: string = (context.payload as any).repository.owner.login
+      // eslint-disable-next-line no-console
+      console.log({githubUser})
       const res = await fetch(pullReqUrl, {
         headers: [
           [
             'Authorization',
-            // TODO: user hard code
-            `Basic ${Buffer.from(`nwtgck:${githubToken}`).toString('base64')}`
+            `Basic ${Buffer.from(`${githubUser}:${githubToken}`).toString(
+              'base64'
+            )}`
           ]
         ]
       })
@@ -46,7 +49,9 @@ async function run(): Promise<void> {
       // TODO:
       execSync(`git config --global user.name "Bee Bot"`)
       // (from: https://stackoverflow.com/a/23987039/2885946)
-      execSync(`git fetch --unshallow`)
+      execSync(`git fetch --unshallow --all`)
+      // eslint-disable-next-line no-console
+      console.log(execSync(`git checkout ${baseBranchName}`).toString())
       // eslint-disable-next-line no-console
       console.log(
         execSync(
