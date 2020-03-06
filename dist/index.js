@@ -3517,6 +3517,7 @@ const node_fetch_1 = __importDefault(__webpack_require__(454));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const githubToken = core.getInput('github-token', { required: true });
             // eslint-disable-next-line no-console
             console.log(JSON.stringify(github_1.context, null, 2));
             if (github_1.context.eventName === 'issue_comment') {
@@ -3527,7 +3528,15 @@ function run() {
                 // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const pullReqUrl = github_1.context.payload.issue.pull_request.url;
-                const resJson = yield (yield node_fetch_1.default(pullReqUrl)).json();
+                const res = yield node_fetch_1.default(pullReqUrl, {
+                    headers: [
+                        [
+                            'Authorization',
+                            `Basic ${Buffer.from(githubToken).toString('base64')}`
+                        ]
+                    ]
+                });
+                const resJson = yield res.json();
                 // eslint-disable-next-line no-console
                 console.log(JSON.stringify(resJson, null, 2));
             }

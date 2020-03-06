@@ -4,6 +4,7 @@ import fetch from 'node-fetch'
 
 async function run(): Promise<void> {
   try {
+    const githubToken = core.getInput('github-token', {required: true})
     // eslint-disable-next-line no-console
     console.log(JSON.stringify(context, null, 2))
     if (context.eventName === 'issue_comment') {
@@ -14,7 +15,15 @@ async function run(): Promise<void> {
       // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const pullReqUrl: string = (context.payload as any).issue.pull_request.url
-      const resJson = await (await fetch(pullReqUrl)).json()
+      const res = await fetch(pullReqUrl, {
+        headers: [
+          [
+            'Authorization',
+            `Basic ${Buffer.from(githubToken).toString('base64')}`
+          ]
+        ]
+      })
+      const resJson = await res.json()
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(resJson, null, 2))
     } else {
