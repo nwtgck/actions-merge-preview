@@ -3565,6 +3565,20 @@ function run() {
                 // Push preview branch
                 // NOTE: Force push (should be safe because preview branch always start with "actions-merge-preview/")
                 child_process_1.execSync(`git push -fu origin ${previewBranchName}`);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const baseRepoFullName = github_1.context.payload.repository.full_name;
+                // Create GitHub client
+                const githubClient = new github_1.GitHub(githubToken);
+                // Comment body
+                const commentBody = `Preview branch:  \n<https://github.com/${baseRepoFullName}/tree/${previewBranchName}>`;
+                // Comment the deploy URL
+                yield githubClient.issues.createComment({
+                    // eslint-disable-next-line @typescript-eslint/camelcase
+                    issue_number: github_1.context.issue.number,
+                    owner: github_1.context.repo.owner,
+                    repo: github_1.context.repo.repo,
+                    body: commentBody
+                });
             }
             else {
                 // eslint-disable-next-line no-console

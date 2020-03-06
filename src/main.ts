@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {context} from '@actions/github'
+import {context, GitHub} from '@actions/github'
 import fetch from 'node-fetch'
 import {execSync} from 'child_process'
 
@@ -66,6 +66,21 @@ async function run(): Promise<void> {
       // Push preview branch
       // NOTE: Force push (should be safe because preview branch always start with "actions-merge-preview/")
       execSync(`git push -fu origin ${previewBranchName}`)
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const baseRepoFullName = (context.payload as any).repository.full_name
+      // Create GitHub client
+      const githubClient = new GitHub(githubToken)
+      // Comment body
+      const commentBody = `Preview branch:  \n<https://github.com/${baseRepoFullName}/tree/${previewBranchName}>`
+      // Comment the deploy URL
+      await githubClient.issues.createComment({
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        issue_number: context.issue.number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: commentBody
+      })
     } else {
       // eslint-disable-next-line no-console
       console.warn(`event name is not 'issue_comment': ${context.eventName}`)
