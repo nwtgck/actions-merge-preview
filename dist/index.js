@@ -3519,8 +3519,6 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const githubToken = core.getInput('github-token', { required: true });
-            // eslint-disable-next-line no-console
-            console.log(JSON.stringify(github_1.context, null, 2));
             if (github_1.context.eventName === 'issue_comment') {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const comment = github_1.context.payload.comment.body;
@@ -3539,8 +3537,6 @@ function run() {
                     ]
                 });
                 const resJson = yield res.json();
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(resJson, null, 2));
                 const prUserName = resJson.head.user.login;
                 const baseBranchName = resJson.base.ref;
                 const branchName = resJson.head.ref;

@@ -6,8 +6,6 @@ import {execSync} from 'child_process'
 async function run(): Promise<void> {
   try {
     const githubToken = core.getInput('github-token', {required: true})
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(context, null, 2))
     if (context.eventName === 'issue_comment') {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const comment: string = (context.payload as any).comment.body
@@ -26,8 +24,6 @@ async function run(): Promise<void> {
         ]
       })
       const resJson = await res.json()
-      // eslint-disable-next-line no-console
-      console.log(JSON.stringify(resJson, null, 2))
       const prUserName: string = resJson.head.user.login
       const baseBranchName: string = resJson.base.ref
       const branchName: string = resJson.head.ref
