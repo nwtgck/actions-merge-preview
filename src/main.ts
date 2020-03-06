@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import {context} from '@actions/github'
 import fetch from 'node-fetch'
+import {execSync} from 'child_process'
 
 async function run(): Promise<void> {
   try {
@@ -27,6 +28,14 @@ async function run(): Promise<void> {
       const resJson = await res.json()
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(resJson, null, 2))
+      const prUserName: string = resJson.head.user.login
+      const baseBranchName: string = resJson.base.ref
+      const branchName: string = resJson.head.ref
+      const fullRepoName: string = resJson.head.repo.full_name
+      execSync(
+        `git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`
+      )
+      execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
     } else {
       // eslint-disable-next-line no-console
       console.warn(`event name is not 'issue_comment': ${context.eventName}`)

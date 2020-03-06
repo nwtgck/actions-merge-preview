@@ -3514,6 +3514,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const github_1 = __webpack_require__(469);
 const node_fetch_1 = __importDefault(__webpack_require__(454));
+const child_process_1 = __webpack_require__(129);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -3540,6 +3541,12 @@ function run() {
                 const resJson = yield res.json();
                 // eslint-disable-next-line no-console
                 console.log(JSON.stringify(resJson, null, 2));
+                const prUserName = resJson.head.user.login;
+                const baseBranchName = resJson.base.ref;
+                const branchName = resJson.head.ref;
+                const fullRepoName = resJson.head.repo.full_name;
+                child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`);
+                child_process_1.execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`);
             }
             else {
                 // eslint-disable-next-line no-console
