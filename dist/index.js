@@ -3545,6 +3545,10 @@ function run() {
                 console.log(child_process_1.execSync(`git status`).toString());
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git log`).toString());
+                // TODO:
+                child_process_1.execSync(`git config --global user.email "you@example.com"`);
+                // TODO:
+                child_process_1.execSync(`git config --global user.email "you@example.com"`);
                 child_process_1.execSync(`git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`);
                 // execSync(`git pull git@github.com:${fullRepoName}.git ${branchName}`)
                 // eslint-disable-next-line no-console

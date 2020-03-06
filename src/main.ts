@@ -32,6 +32,10 @@ async function run(): Promise<void> {
       console.log(execSync(`git status`).toString())
       // eslint-disable-next-line no-console
       console.log(execSync(`git log`).toString())
+      // TODO:
+      execSync(`git config --global user.email "you@example.com"`)
+      // TODO:
+      execSync(`git config --global user.name "Your Name"`)
       execSync(
         `git checkout -b merge-preview--${prUserName}-${branchName} ${baseBranchName}`
       )
