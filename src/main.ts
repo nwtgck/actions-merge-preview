@@ -19,7 +19,8 @@ async function run(): Promise<void> {
         headers: [
           [
             'Authorization',
-            `Basic ${Buffer.from(githubToken).toString('base64')}`
+            // TODO: user hard code
+            `Basic ${Buffer.from(`nwtgck:${githubToken}`).toString('base64')}`
           ]
         ]
       })
