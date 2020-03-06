@@ -3,12 +3,22 @@ import {context} from '@actions/github'
 import fetch from 'node-fetch'
 import {execSync} from 'child_process'
 
+const previewComment = '@bee-bot merge preview'
+
 async function run(): Promise<void> {
   try {
     const githubToken = core.getInput('github-token', {required: true})
     if (context.eventName === 'issue_comment') {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const comment: string = (context.payload as any).comment.body
+      // If not preview-request comment
+      if (!comment.startsWith(previewComment)) {
+        // eslint-disable-next-line no-console
+        console.log(
+          `HINT: Merge-preview is triggered when you comment "${previewComment}"`
+        )
+        return
+      }
       // eslint-disable-next-line no-console
       console.log({commentBody: comment})
       // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
