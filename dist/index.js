@@ -3515,6 +3515,7 @@ const core = __importStar(__webpack_require__(470));
 const github_1 = __webpack_require__(469);
 const node_fetch_1 = __importDefault(__webpack_require__(454));
 const child_process_1 = __webpack_require__(129);
+const previewComment = '@bee-bot merge preview';
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -3522,6 +3523,10 @@ function run() {
             if (github_1.context.eventName === 'issue_comment') {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const comment = github_1.context.payload.comment.body;
+                // If not preview-request comment
+                if (!comment.startsWith(previewComment)) {
+                    return;
+                }
                 // eslint-disable-next-line no-console
                 console.log({ commentBody: comment });
                 // Get pull-req URL like "https://api.github.com/repos/nwtgck/actions-merge-preview/pulls/4"
