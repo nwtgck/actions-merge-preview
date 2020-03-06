@@ -3549,7 +3549,6 @@ function run() {
                 const baseBranchName = resJson.base.ref;
                 const branchName = resJson.head.ref;
                 const fullRepoName = resJson.head.repo.full_name;
-                // TODO: Avoid branch name conflict
                 const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`;
                 // TODO:
                 child_process_1.execSync(`git config --global user.email "bee-bot-bot@protonmail.com"`);
@@ -3564,7 +3563,8 @@ function run() {
                 // eslint-disable-next-line no-console
                 console.log(child_process_1.execSync(`git pull https://github.com/${fullRepoName}.git ${branchName}`).toString());
                 // Push preview branch
-                child_process_1.execSync(`git push -u origin ${previewBranchName}`);
+                // NOTE: Force push (should be safe because preview branch always start with "actions-merge-preview/")
+                child_process_1.execSync(`git push -fu origin ${previewBranchName}`);
             }
             else {
                 // eslint-disable-next-line no-console

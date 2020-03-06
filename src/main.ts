@@ -41,7 +41,6 @@ async function run(): Promise<void> {
       const baseBranchName: string = resJson.base.ref
       const branchName: string = resJson.head.ref
       const fullRepoName: string = resJson.head.repo.full_name
-      // TODO: Avoid branch name conflict
       const previewBranchName = `actions-merge-preview/${prUserName}-${branchName}`
 
       // TODO:
@@ -65,7 +64,8 @@ async function run(): Promise<void> {
         ).toString()
       )
       // Push preview branch
-      execSync(`git push -u origin ${previewBranchName}`)
+      // NOTE: Force push (should be safe because preview branch always start with "actions-merge-preview/")
+      execSync(`git push -fu origin ${previewBranchName}`)
     } else {
       // eslint-disable-next-line no-console
       console.warn(`event name is not 'issue_comment': ${context.eventName}`)
